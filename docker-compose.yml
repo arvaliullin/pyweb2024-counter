@@ -9,5 +9,17 @@ services:
       - .:/code
     environment:
       FLASK_ENV: development
-  redishost:
-    image: "redis:alpine"
+      DATABASE_URI: postgresql://postgres:password@pghost:5432/postgres
+    depends_on:
+      - pghost
+
+  pghost:
+    image: "postgres:17"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
