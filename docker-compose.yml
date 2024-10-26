@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  web:
+    build:
+      dockerfile: deployments/Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+    environment:
+      FLASK_ENV: development
+  redishost:
+    image: "redis:alpine"
